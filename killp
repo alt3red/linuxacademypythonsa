@@ -1,0 +1,25 @@
+#!/bin/python
+"""Kill process that is listening on a given port as argument"""
+
+import subprocess
+import argparse
+import os
+import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument('my_port', help='port that app is running on')
+
+args = parser.parse_args()
+
+try:
+    output = subprocess.check_output(['lsof', '-n', '-i4TCP:'+args.my_port],
+            stderr=subprocess.STDOUT)
+
+    output = output.split('\n')
+
+    pid = int(output[1].split()[1])
+    os.kill(pid, 9)
+    print("Process killed!")
+except:
+    print("There is no process running on that port.")
+    sys.exit(1)

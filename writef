@@ -1,0 +1,14 @@
+#!/bin/python
+"""Write lines to a file until blank line"""
+
+file_name = raw_input("Filename: ")
+buffer = []
+line = ' '
+
+while line != '':
+    line = raw_input("text: ")
+    buffer.append("%s\n" % line)
+
+with open(file_name, 'w') as f:
+    f.writelines(buffer)
+
